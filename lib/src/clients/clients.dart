@@ -15,3 +15,4 @@ export 'package:musicbrainz_api_client/src/clients/release.dart';
 export 'package:musicbrainz_api_client/src/clients/series.dart';
 export 'package:musicbrainz_api_client/src/clients/url.dart';
 export 'package:musicbrainz_api_client/src/clients/work.dart';
+export 'package:musicbrainz_api_client/src/clients/cover_art.dart';

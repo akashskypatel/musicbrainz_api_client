@@ -14,6 +14,7 @@ import 'package:musicbrainz_api_client/src/clients/release.dart';
 import 'package:musicbrainz_api_client/src/clients/series.dart';
 import 'package:musicbrainz_api_client/src/clients/url.dart';
 import 'package:musicbrainz_api_client/src/clients/work.dart';
+import 'package:musicbrainz_api_client/src/clients/cover_art.dart';
 
 class MusicBrainzApiClient {
   late final MusicBrainzHttpClient _httpClient;
@@ -30,7 +31,7 @@ class MusicBrainzApiClient {
   late final Series series;
   late final URL urls;
   late final Work works;
-
+  late final CoverArt coverArt;
   /// Creates a new instance of [MusicBrainzApiClient].
   ///
   /// This client provides access to various MusicBrainz API endpoints such as
@@ -57,6 +58,7 @@ class MusicBrainzApiClient {
     series = Series(_httpClient);
     urls = URL(_httpClient);
     works = Work(_httpClient);
+    coverArt = CoverArt(_httpClient);
   }
 
   /// Closes the underlying HTTP client and releases any resources.

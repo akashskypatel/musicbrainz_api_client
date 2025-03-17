@@ -22,13 +22,14 @@ class Label {
   /// Retrieves detailed information about a specific Label by its MusicBrainz ID.
   ///
   /// - [id]: The MusicBrainz ID of the Label to retrieve.
+  /// - [inc]: Additional details to include: `aliases` `annotation` `tags` `releases` `genres` `ratings` `area-rels` `artist-rels` `event-rels` `genre-rels` `instrument-rels` `label-rels` `place-rels` `recording-rels` `release-rels` `release-group-rels` `series-rels` `url-rels` `work-rels`
   ///
   /// Returns a [Future] that completes with a [Map] containing the Label's details.
   ///
   /// Throws an [Exception] if the request fails or if the response status code is not 200.
-  Future<Map<String, dynamic>> get(String id) async {
+  Future<dynamic> get(String id, {List<String>? inc}) async {
     final uri = Uri.https(_baseUrl, 'ws/2/$_entity/$id', {
-      'inc': 'aliases+annotation+tags+releases+genres+ratings',
+      if (inc != null) 'inc': inc.join('+'),
     });
     final HttpRequestData req = HttpRequestData(HttpRequestType.GET, uri);
     final response = await _httpClient.request(req);

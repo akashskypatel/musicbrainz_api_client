@@ -11,6 +11,7 @@ import 'unit/release_test.dart' as release;
 import 'unit/series_test.dart' as series;
 import 'unit/url_test.dart' as url;
 import 'unit/work_test.dart' as work;
+import 'unit/cover_art_test.dart' as cover_art;
 
 void main() {
   area.main();
@@ -26,4 +27,5 @@ void main() {
   series.main();
   url.main();
   work.main();
+  cover_art.main();
 }

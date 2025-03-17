@@ -17,6 +17,7 @@ A Dart/Flutter client for interacting with the [MusicBrainz API](https://musicbr
  - **Series** - A series is a sequence of separate release groups, releases, recordings, works or events with a common theme. The theme is usually prominent in the branding of the entities in the series and the individual entities will often have been given a number indicating the position in the series.
  - **Work** - A work is a distinct intellectual or artistic creation, which can be expressed in the form of one or more audio recordings. While a recording represents audio data, a work represents the composition behind the recording.
  - **Url** - A URL represents a regular Internet Uniform Resource Locator and an associated description of that URL.
+ - **Cover Art** - Covert art for releases or release-groups.
 
 ## Installation
 
@@ -62,6 +63,13 @@ print(result);
 var result = await client.genres.get('9067dfc9-4bfe-4e2b-b2f2-88fb30dd5c46');
 print(result);
 result = await client.genres.all();
+print(result);
+```
+
+### Fetch Cover art
+
+```dart
+var result = await client.coverArt.get('76df3287-6cda-33eb-8e9a-044b5e15ffdd','release');
 print(result);
 ```
 

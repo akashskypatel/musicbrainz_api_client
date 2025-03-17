@@ -26,7 +26,7 @@ class URL {
   /// Returns a [Future] that completes with a [Map] containing the URL's details.
   ///
   /// Throws an [Exception] if the request fails or if the response status code is not 200.
-  Future<Map<String, dynamic>> get(String id) async {
+  Future<dynamic> get(String id) async {
     final uri = Uri.https(_baseUrl, 'ws/2/$_entity/$id');
     final HttpRequestData req = HttpRequestData(HttpRequestType.GET, uri);
     final response = await _httpClient.request(req);

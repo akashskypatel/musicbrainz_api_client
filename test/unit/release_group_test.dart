@@ -14,7 +14,7 @@ void main() {
     client.close();
   });
 
-  group('MusicBrainzApiClient.AreaTest', () {
+  group('MusicBrainzApiClient.ReleaseGroupTest', () {
     test('$entity.get', () async {
       final id = '5ec4ddac-9323-4072-ab00-fd84a94a0e3a';
       final response = await client.releaseGroups.get(id);

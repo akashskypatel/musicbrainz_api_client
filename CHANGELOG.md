@@ -1,3 +1,9 @@
+## 0.1.2
+
+### Added
+- Added `CoverArt` to retreive cover art for `release` and `release-group`.
+- Updated tests.
+
 ## 0.1.1
 
 ### Added

@@ -14,7 +14,7 @@ void main() {
     client.close();
   });
 
-  group('MusicBrainzApiClient.AreaTest', () {
+  group('MusicBrainzApiClient.ArtistTest', () {
     test('$entity.get', () async {
       final id = '606bf117-494f-4864-891f-09d63ff6aa4b';
       final response = await client.artists.get(id);
