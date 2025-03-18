@@ -109,7 +109,7 @@ class Instrument {
   }) async {
     throw UnimplementedError(' To be implemented after user authorization');
 
-    return await _httpClient.browseEntity(
+    /* return await _httpClient.browseEntity(
       _baseUrl,
       _entity,
       _entities,
@@ -119,6 +119,6 @@ class Instrument {
       limit: limit,
       offset: offset,
       paginated: paginated,
-    );
+    ); */
   }
 }
