@@ -7,8 +7,22 @@ import 'package:logging/logging.dart';
 ///
 /// This class provides methods to retrieve and search for Artists (e.g., countries, cities)
 /// in the MusicBrainz database.
+///
+/// **Related Entities**:
+/// - `area`, `collection`, `recording`, `release`, `release-group`, `work`
+///
+/// **Subquery includes**
+/// - `recordings`, `releases`, `release-groups`, `works`
+///
+/// **Browse includes**:
+/// - `aliases`, `annotation`, `tags`, `genres`, `ratings`
+///
+/// **Relationships**
+/// - `recordings`, `releases`, `release-groups`, `works`
+///
 class Artist {
-  static final _logger = Logger('MusicBrainzApi.Artist');
+  static const _client = 'MusicBrainzApi.Artist';
+  static final _logger = Logger(_client);
   final MusicBrainzHttpClient _httpClient;
   final String _baseUrl = 'musicbrainz.org';
   final String _entity = 'artist';
@@ -22,24 +36,30 @@ class Artist {
   /// Retrieves detailed information about a specific Artist by its MusicBrainz ID.
   ///
   /// - [id]: The MusicBrainz ID of the Artist to retrieve.
-  /// - [inc]: Additional details to include: `aliases` `annotation` `tags` `recordings` `releases` `release-groups` `works` `genres` `ratings` `area-rels` `artist-rels` `event-rels` `genre-rels` `instrument-rels` `label-rels` `place-rels` `recording-rels` `release-rels` `release-group-rels` `series-rels` `url-rels` `work-rels`
+  /// - [inc]: Additional details to include: `'recordings'`,`'releases'`,`'release-groups'`,`'works'`,`'aliases'`,`'annotation'`,`'tags'`,`'genres'`,`'ratings'`,`'recording-rels'`,`'release-rels'`,`'release-group-rels'`,`'work-rels'`
   ///
   /// Returns a [Future] that completes with a [Map] containing the Artist's details.
   ///
   /// Throws an [Exception] if the request fails or if the response status code is not 200.
-  Future<dynamic> get(String id, {List<String>? inc}) async {
+  Future<dynamic> get(String id, {List<String> inc = const []}) async {
     final uri = Uri.https(_baseUrl, 'ws/2/$_entity/$id', {
-      if (inc != null) 'inc': inc.join('+'),
+      if (inc.isNotEmpty) 'inc': inc.join('+'),
     });
     final HttpRequestData req = HttpRequestData(HttpRequestType.GET, uri);
     final response = await _httpClient.request(req);
 
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body);
-    } else {
+    if (response.statusCode != 200) {
+      _logger.warning(
+        '$_client: Failed to get results: ${response.statusCode}',
+      );
       _logger.warning(response);
-      throw Exception('Failed to load search results: ${response.statusCode}');
+      if (!_httpClient.isSilent) {
+        throw Exception(
+          '$_client: Failed to get results: ${response.statusCode}',
+        );
+      }
     }
+    return jsonDecode(response.body);
   }
 
   /// Searches for Artists in the MusicBrainz database based on a query.
@@ -63,6 +83,39 @@ class Artist {
       _entity,
       _entities,
       query,
+      limit: limit,
+      offset: offset,
+      paginated: paginated,
+    );
+  }
+
+  /// Browse areas by related entity in the MusicBrainz database based on related id.
+  ///
+  /// - [relatedEntity]: Entity realted to area to browse by: `'area'`, `'recording'`, `'release'`, `'release-group'`, `'work'`
+  /// - [relatedId]: Id of the related entity to browse by.
+  /// - [inc]: Additional details to include: `'aliases'`,`'annotation'`,`'tags'`,`'genres'`,`'ratings'`
+  /// - [limit]: The maximum number of results to return (default is 25).
+  /// - [offset]: The offset for paginated results (default is 0).
+  /// - [paginated]: Whether to return paginated results (default is `true`).
+  ///
+  /// Returns a [Future] that completes with the search results.
+  ///
+  /// Throws an [Exception] if the request fails or if the response status code is not 200.
+  Future<dynamic> browse(
+    String relatedEntity,
+    String relatedId, {
+    List<String> inc = const [],
+    int limit = 25,
+    int offset = 0,
+    bool paginated = true,
+  }) async {
+    return await _httpClient.browseEntity(
+      _baseUrl,
+      _entity,
+      _entities,
+      relatedEntity,
+      relatedId,
+      inc: inc,
       limit: limit,
       offset: offset,
       paginated: paginated,

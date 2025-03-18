@@ -32,6 +32,7 @@ class MusicBrainzApiClient {
   late final URL urls;
   late final Work works;
   late final CoverArt coverArt;
+
   /// Creates a new instance of [MusicBrainzApiClient].
   ///
   /// This client provides access to various MusicBrainz API endpoints such as
@@ -44,7 +45,8 @@ class MusicBrainzApiClient {
   /// final artist = await client.artists.get('artist-id');
   /// client.close();
   /// ```
-  MusicBrainzApiClient() : _httpClient = MusicBrainzHttpClient() {
+  MusicBrainzApiClient({bool isSilent = true})
+    : _httpClient = MusicBrainzHttpClient(isSilent: isSilent) {
     genres = Genre(_httpClient);
     areas = Area(_httpClient);
     artists = Artist(_httpClient);

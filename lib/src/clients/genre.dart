@@ -6,6 +6,7 @@ import 'package:logging/logging.dart';
 /// A client for interacting with the MusicBrainz API's genre-related endpoints.
 ///
 /// This class provides methods to retrieve and search for genres in the MusicBrainz database.
+///
 class Genre {
   static final _logger = Logger('MusicBrainzApi.Genre');
   final MusicBrainzHttpClient _httpClient;
@@ -52,9 +53,12 @@ class Genre {
 
       // Handle non-200 status codes
       if (response.statusCode != 200) {
-        throw Exception(
-          'Failed to load search results: ${response.statusCode}',
-        );
+        if (!_httpClient.isSilent) {
+          throw Exception(
+            'Failed to load search results: ${response.statusCode}',
+          );
+        }
+        return jsonDecode(response.body);
       }
 
       // Handle text format response
@@ -83,7 +87,8 @@ class Genre {
       return jsonResponse;
     } catch (e, stackTrace) {
       _logger.warning(e);
-      throw Exception(stackTrace);
+      if (!_httpClient.isSilent) throw Exception(stackTrace);
+      return;
     }
   }
 
@@ -96,6 +101,12 @@ class Genre {
   ///
   /// Throws an [Exception] if the request fails or if the response status code is not 200.
   Future<dynamic> all({bool textFormat = false}) async {
-    return await get('all', textFormat: textFormat);
+    try {
+      return await get('all', textFormat: textFormat);
+    } catch (e, stackTrace) {
+      _logger.warning(e);
+      if (!_httpClient.isSilent) throw Exception(stackTrace);
+      return;
+    }
   }
 }

@@ -37,9 +37,11 @@ class HttpRequestData {
 /// This client handles rate limiting, request validation, and logging.
 /// It extends [http.BaseClient] to provide additional functionality.
 class MusicBrainzHttpClient extends http.BaseClient {
+  static const _client = 'MusicBrainzApi.MusicBrainzHttpClient';
   late final Map<HttpRequestType, Function> _httpRequestHandlers;
-  static final _logger = Logger('MusicBrainzApi.MusicBrainzHttpClient');
+  static final _logger = Logger(_client);
   final http.Client _httpClient;
+  bool isSilent = true;
 
   /// Indicates whether the client has been closed.
   bool _closed = false;
@@ -55,13 +57,14 @@ class MusicBrainzHttpClient extends http.BaseClient {
   DateTime _lastRequestTime = DateTime.now();
 
   static const Map<String, String> _defaultHeaders = {
-    'user-agent': 'Dart:MusicBrainz_API_Client/0.0.1 (akashskypatel@gmail.com)',
+    'user-agent':
+        'Dart:MusicBrainz_API_Client/0.0.1 (https://github.com/akashskypatel/musicbrainz_api_client)',
   };
 
   /// Creates a new instance of [MusicBrainzHttpClient].
   ///
   /// Initializes the HTTP client and sets up request handlers for different HTTP methods.
-  MusicBrainzHttpClient() : _httpClient = http.Client() {
+  MusicBrainzHttpClient({this.isSilent = true}) : _httpClient = http.Client() {
     _httpRequestHandlers = {
       HttpRequestType.GET: (HttpRequestData reqData) async {
         Map<String, String> newHeaders = {};
@@ -158,7 +161,11 @@ class MusicBrainzHttpClient extends http.BaseClient {
       return response;
     } catch (e, stackTrace) {
       _logger.warning(e);
-      throw Exception(stackTrace);
+      _logger.warning('Error');
+      if (!isSilent) {
+        throw Exception(stackTrace);
+      }
+      return http.Response('$e \n $stackTrace', 400);
     }
   }
 
@@ -175,7 +182,10 @@ class MusicBrainzHttpClient extends http.BaseClient {
       Function req = _httpRequestHandlers[reqData.method]!;
 
       if (_closed) {
-        throw Exception('Client closed before request could be made.');
+        if (!isSilent) {
+          throw Exception('Client closed before request could be made.');
+        }
+        return http.Response('Client closed.', 400);
       }
 
       response = await req(reqData);
@@ -201,7 +211,8 @@ class MusicBrainzHttpClient extends http.BaseClient {
       return response;
     } catch (e, stackTrace) {
       _logger.warning(e);
-      throw Exception(stackTrace);
+      if (!isSilent) throw Exception(stackTrace);
+      return http.Response('$e \n $stackTrace', 400);
     }
   }
 
@@ -241,9 +252,12 @@ class MusicBrainzHttpClient extends http.BaseClient {
 
       // Handle non-200 status codes
       if (response.statusCode != 200) {
-        throw Exception(
-          'Failed to load search results: ${response.statusCode}',
-        );
+        if (!isSilent) {
+          throw Exception(
+            'Failed to load search results: ${response.statusCode}',
+          );
+        }
+        return jsonDecode(response.body);
       }
 
       // Handle JSON format response
@@ -264,7 +278,79 @@ class MusicBrainzHttpClient extends http.BaseClient {
       return jsonResponse;
     } catch (e, stackTrace) {
       _logger.warning(e);
-      throw Exception(stackTrace);
+      if (!isSilent) throw Exception(stackTrace);
+      return http.Response('$e \n $stackTrace', 400);
+    }
+  }
+
+  /// Browse for an entity in the MusicBrainz API.
+  ///
+  /// - [baseUrl]: The base URL of the MusicBrainz API.
+  /// - [entity]: The type of entity to browse for (e.g., 'artist', 'release').
+  /// - [relatedEntity]: Related entity to browse the browsing entity by.
+  /// - [relatedId]: Id of the related entity to browse the browsing entity by.
+  /// - [inc]: Fields to ionclude in the result.
+  /// - [limit]: The maximum number of results to return (default is 25).
+  /// - [offset]: The offset for paginated results (default is 0).
+  /// - [paginated]: Whether to return paginated results (default is `true`).
+  ///
+  /// Returns a [Future] that completes with the search results.
+  ///
+  /// Throws an [Exception] if the request fails or if the response status code is not 200.
+  Future<dynamic> browseEntity(
+    String baseUrl,
+    String entity,
+    String entities,
+    String relatedEntity,
+    String relatedId, {
+    List<String>? inc,
+    int limit = 25,
+    int offset = 0,
+    bool paginated = true,
+  }) async {
+    try {
+      final uri = Uri.https(baseUrl, 'ws/2/$entity', {
+        relatedEntity: relatedId,
+        if (inc != null) 'inc': inc.join('+'),
+        if (!paginated)
+          'limit': (100).toString()
+        else if (paginated)
+          'limit': limit.toString(),
+        'offset': offset.toString(),
+      });
+
+      final response = await request(HttpRequestData(HttpRequestType.GET, uri));
+
+      // Handle non-200 status codes
+      if (response.statusCode != 200) {
+        if (!isSilent) {
+          throw Exception(
+            'Failed to load search results: ${response.statusCode}',
+          );
+        }
+        return jsonDecode(response.body);
+      }
+
+      // Handle JSON format response
+      final jsonResponse = jsonDecode(response.body);
+      final result = jsonResponse['${entity}s'] ?? [];
+      if (!paginated) {
+        result.addAll(
+          unpaginate(
+            entity,
+            entities,
+            HttpRequestData(HttpRequestType.GET, uri),
+            jsonResponse,
+          ),
+        );
+        return result;
+      }
+
+      return jsonResponse;
+    } catch (e, stackTrace) {
+      _logger.warning(e);
+      if (!isSilent) throw Exception(stackTrace);
+      return http.Response('$e \n $stackTrace', 400);
     }
   }
 
@@ -300,9 +386,12 @@ class MusicBrainzHttpClient extends http.BaseClient {
         );
 
         if (nextResponse.statusCode != 200) {
-          throw Exception(
-            'Failed to load paginated results: ${nextResponse.statusCode}',
-          );
+          if (!isSilent) {
+            throw Exception(
+              'Failed to load paginated results: ${nextResponse.statusCode}',
+            );
+          }
+          return nextResponse;
         }
 
         final nextJsonResponse = jsonDecode(nextResponse.body);
@@ -315,14 +404,28 @@ class MusicBrainzHttpClient extends http.BaseClient {
       }
     } catch (e, stackTrace) {
       _logger.warning(e);
-      throw Exception(stackTrace);
+      if (!isSilent) throw Exception(stackTrace);
+      return http.Response('$e \n $stackTrace', 400);
     }
     return result;
   }
 
   @override
-  Future<http.StreamedResponse> send(http.BaseRequest request) {
-    if (_closed) throw Exception();
+  Future<http.StreamedResponse> send(http.BaseRequest request) async {
+    if (_closed) {
+      if (!isSilent) {
+        throw Exception();
+      }
+      final emptyStream = Stream<List<int>>.empty();
+      final response = http.StreamedResponse(
+        emptyStream, // Empty stream for the body
+        204, // HTTP status code: 204 No Content
+        request: request, // Pass the original request
+        headers: {'Content-Length': '0'}, // Optional headers
+      );
+
+      return response;
+    }
 
     // Apply default headers if they are not already present
     _defaultHeaders.forEach((key, value) {
@@ -355,15 +458,18 @@ class MusicBrainzHttpClient extends http.BaseClient {
     if (_closed) return;
 
     if (statusCode >= 500) {
-      throw Exception(response);
+      if (!isSilent) throw Exception(response);
+      return;
     }
 
     if (statusCode == 429) {
-      throw Exception(response);
+      if (!isSilent) throw Exception(response);
+      return;
     }
 
     if (statusCode >= 400) {
-      throw Exception(response);
+      if (!isSilent) throw Exception(response);
+      return;
     }
   }
 }

@@ -1,6 +1,6 @@
 name: musicbrainz_api_client
 description: "A Dart/Flutter client to interact with MusicBrainz API to access its database. Does not provide any methods that need user level authentication."
-version: 0.1.2
+version: 0.1.3
 homepage: https://github.com/akashskypatel/musicbrainz_api_client
 
 environment:

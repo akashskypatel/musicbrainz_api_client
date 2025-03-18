@@ -1,3 +1,10 @@
+## 0.1.3
+
+### Added
+- Added Browse functions to all entities except `area`, `instrument`, `series`.
+- Updated tests
+- Added ability to fail silently instead of throwing errors on invalid usage.
+
 ## 0.1.2
 
 ### Added

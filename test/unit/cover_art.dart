@@ -1,4 +1,4 @@
-//file path: test/unit/artist_client_test.dart
+//file path: test/unit/cover_art.dart
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:musicbrainz_api_client/musicbrainz_api_client.dart';

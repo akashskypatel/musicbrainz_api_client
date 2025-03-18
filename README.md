@@ -55,6 +55,12 @@ var result = await client.areas.search('america');
 print(result);
 result = await client.areas.get('f33958ac-4198-3ce8-a751-1c44d9b4063a');
 print(result);
+final result = await client.artists.browse(
+        relatedEntity,
+        'f33958ac-4198-3ce8-a751-1c44d9b4063a',
+        inc: ['aliases'],
+      );
+print(result);
 ```
 
 ### Fetch Genre Details
