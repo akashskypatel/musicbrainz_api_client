@@ -1,3 +1,8 @@
+## 0.1.4
+
+### Added
+- Fixed unpagination for search and browse
+
 ## 0.1.3
 
 ### Added

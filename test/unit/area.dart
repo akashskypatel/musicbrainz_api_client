@@ -48,6 +48,19 @@ void main() {
       print('Search $entity: ${response['${entity}s'].length}');
     });
 
+    test('$entity.Search unpaginate', () async {
+      final response = await client.areas.search('city', paginated: false);
+      expect(response, isA<Map<String, dynamic>>());
+      expect(response['${entity}s'], isA<List<dynamic>>());
+      expect(
+        response['${entity}-count'],
+        equals(List.from(response['${entity}s']).length),
+      );
+      print(
+        'Browse $entity expected count: ${response['${entity}-count']} actual count: ${List.from(response['${entity}s']).length}',
+      );
+    });
+
     test('$entity.Browse', () async {
       var future = client.areas.browse('', '');
       expect(future, throwsA(isA<UnimplementedError>()));

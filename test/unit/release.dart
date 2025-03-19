@@ -100,5 +100,24 @@ void main() {
       expect(response['error'], isNotNull);
       print('Browse $entity details: $response');
     });
+
+    test('$entity.Browse positive unpaginate', () async {
+      final relatedEntity = 'release-group';
+      final response = await client.releases.browse(
+        relatedEntity,
+        '3ac5236a-3bd8-44c6-ab60-69b013594ae6',
+        inc: ['recordings'],
+        paginated: false,
+      );
+      expect(response, isA<Map<String, dynamic>>());
+      expect(response['${entity}s'], isA<List<dynamic>>());
+      expect(
+        response['${entity}-count'],
+        equals(List.from(response['${entity}s']).length),
+      );
+      print(
+        'Browse $entity expected count: ${response['${entity}-count']} actual count: ${List.from(response['${entity}s']).length}',
+      );
+    });
   });
 }

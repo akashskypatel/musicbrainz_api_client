@@ -160,10 +160,9 @@ class MusicBrainzHttpClient extends http.BaseClient {
 
       return response;
     } catch (e, stackTrace) {
-      _logger.warning(e);
-      _logger.warning('Error');
+      _logger.warning('$e \n $stackTrace');
       if (!isSilent) {
-        throw Exception(stackTrace);
+        throw Exception('$e \n $stackTrace');
       }
       return http.Response('$e \n $stackTrace', 400);
     }
@@ -185,6 +184,7 @@ class MusicBrainzHttpClient extends http.BaseClient {
         if (!isSilent) {
           throw Exception('Client closed before request could be made.');
         }
+        _logger.severe('Client closed before request could be made.');
         return http.Response('Client closed.', 400);
       }
 
@@ -210,8 +210,8 @@ class MusicBrainzHttpClient extends http.BaseClient {
       }
       return response;
     } catch (e, stackTrace) {
-      _logger.warning(e);
-      if (!isSilent) throw Exception(stackTrace);
+      _logger.warning('$e \n $stackTrace');
+      if (!isSilent) throw Exception('$e \n $stackTrace');
       return http.Response('$e \n $stackTrace', 400);
     }
   }
@@ -261,25 +261,27 @@ class MusicBrainzHttpClient extends http.BaseClient {
       }
 
       // Handle JSON format response
-      final jsonResponse = jsonDecode(response.body);
-      final result = jsonResponse['${entity}s'] ?? [];
-      if (!paginated) {
-        result.addAll(
-          unpaginate(
+      var jsonResponse = jsonDecode(response.body);
+      var result = List.from(jsonResponse[entities]);
+
+      if (!paginated &&
+          (jsonResponse['$entity-count'] ?? jsonResponse['count']) >
+              result.length) {
+        jsonResponse[entities] = List.from(
+          await unpaginate(
             entity,
             entities,
             HttpRequestData(HttpRequestType.GET, uri),
             jsonResponse,
           ),
         );
-        return result;
       }
 
       return jsonResponse;
     } catch (e, stackTrace) {
-      _logger.warning(e);
-      if (!isSilent) throw Exception(stackTrace);
-      return http.Response('$e \n $stackTrace', 400);
+      _logger.warning('$e \n $stackTrace');
+      if (!isSilent) throw Exception('$e \n $stackTrace');
+      return '';
     }
   }
 
@@ -332,25 +334,26 @@ class MusicBrainzHttpClient extends http.BaseClient {
       }
 
       // Handle JSON format response
-      final jsonResponse = jsonDecode(response.body);
-      final result = jsonResponse['${entity}s'] ?? [];
-      if (!paginated) {
-        result.addAll(
-          unpaginate(
+      var jsonResponse = jsonDecode(response.body);
+      var result = jsonResponse[entities] ?? [];
+      if (!paginated &&
+          (jsonResponse['$entity-count'] ?? jsonResponse['count']) >
+              result.length) {
+        jsonResponse[entities] = List.from(
+          await unpaginate(
             entity,
             entities,
             HttpRequestData(HttpRequestType.GET, uri),
             jsonResponse,
           ),
         );
-        return result;
       }
 
       return jsonResponse;
     } catch (e, stackTrace) {
-      _logger.warning(e);
-      if (!isSilent) throw Exception(stackTrace);
-      return http.Response('$e \n $stackTrace', 400);
+      _logger.warning('$e \n $stackTrace');
+      if (!isSilent) throw Exception('$e \n $stackTrace');
+      return '';
     }
   }
 
@@ -372,7 +375,7 @@ class MusicBrainzHttpClient extends http.BaseClient {
   ) async {
     final result = jsonResponse[entities] ?? [];
     try {
-      final total = jsonResponse['$entity-count'];
+      final total = jsonResponse['$entity-count'] ?? jsonResponse['count'];
       int offset = 0;
       for (var currentOffset = offset + result.length; currentOffset < total;) {
         final nextUri = reqData.uri.replace(
@@ -391,7 +394,7 @@ class MusicBrainzHttpClient extends http.BaseClient {
               'Failed to load paginated results: ${nextResponse.statusCode}',
             );
           }
-          return nextResponse;
+          return jsonDecode(nextResponse.body);
         }
 
         final nextJsonResponse = jsonDecode(nextResponse.body);
@@ -404,8 +407,8 @@ class MusicBrainzHttpClient extends http.BaseClient {
       }
     } catch (e, stackTrace) {
       _logger.warning(e);
-      if (!isSilent) throw Exception(stackTrace);
-      return http.Response('$e \n $stackTrace', 400);
+      if (!isSilent) throw Exception('$e \n $stackTrace');
+      return '';
     }
     return result;
   }

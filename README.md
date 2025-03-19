@@ -61,6 +61,9 @@ final result = await client.artists.browse(
         inc: ['aliases'],
       );
 print(result);
+//Unpaginate results
+final result = await client.areas.search('city', paginated: false);
+print(result);
 ```
 
 ### Fetch Genre Details
