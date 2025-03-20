@@ -39,7 +39,7 @@ class Release {
   /// - [id]: The MusicBrainz ID of the Release to retrieve.
   /// - [inc]: Additional details to include: `'artists'`, `'collections'`, `'labels'`, `'recordings'`,
   ///   `'release-groups'`,`'artist-credits'`,`'media'`,`'discids'`,`'isrcs'`,`'annotation'`,`'tags'`,
-  ///   `'genres'`,`'artist-rels'`,`'label-rels'`,`'recording-rels'`,`'release-group-rels'`,
+  ///   `'genres'`,`'artist-rels'`,`'label-rels'`,`'recording-rels'`,`'release-group-rels'`, `'url-rels'`
   ///
   /// Returns a [Future] that completes with a [Map] containing the Release's details.
   ///

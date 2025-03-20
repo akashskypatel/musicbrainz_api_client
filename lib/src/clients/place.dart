@@ -10,6 +10,9 @@ import 'package:logging/logging.dart';
 ///
 /// **Related Entities**:
 /// - `area`, `collection`
+/// 
+/// **Subquery includes**
+/// - `'aliases'`,`'annotation'`,`'tags'`,`'genres'`, `'url-rels'`
 ///
 /// **Browse includes**:
 /// - `annotation`, `tags`, `genres`
@@ -30,7 +33,7 @@ class Place {
   /// Retrieves detailed information about a specific Place by its MusicBrainz ID.
   ///
   /// - [id]: The MusicBrainz ID of the Place to retrieve.
-  /// - [inc]: Additional details to include: `'aliases'`,`'annotation'`,`'tags'`,`'genres'`
+  /// - [inc]: Additional details to include: `'aliases'`,`'annotation'`,`'tags'`,`'genres'`, `'url-rels'`
   ///
   /// Returns a [Future] that completes with a [Map] containing the Place's details.
   ///

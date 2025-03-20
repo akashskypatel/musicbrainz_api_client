@@ -36,7 +36,8 @@ class ReleaseGroup {
   /// Retrieves detailed information about a specific ReleaseGroup by its MusicBrainz ID.
   ///
   /// - [id]: The MusicBrainz ID of the ReleaseGroup to retrieve.
-  /// - [inc]: Additional details to include: `'artists'`,`'releases'`,`'artist-credits'`,`'annotation'`,`'tags'`,`'genres'`,`'ratings'`,`'artist-rels'`,`'release-rels'`
+  /// - [inc]: Additional details to include: `'artists'`,`'releases'`,`'artist-credits'`,
+  /// `'annotation'`,`'tags'`,`'genres'`,`'ratings'`,`'artist-rels'`,`'release-rels'`, `'url-rels'`
   ///
   /// Returns a [Future] that completes with a [Map] containing the ReleaseGroup's details.
   ///

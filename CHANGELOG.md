@@ -1,3 +1,8 @@
+## 0.1.5
+
+### Added
+- Updated documentation comments
+
 ## 0.1.4
 
 ### Added

@@ -10,6 +10,9 @@ import 'package:logging/logging.dart';
 ///
 /// **Related Entities**:
 /// - `collection`
+/// 
+/// **Subquery includes**
+/// - `'aliases'`,`'annotation'`,`'tags'`,`'genres'`, `'url-rels'`
 ///
 /// **Browse includes**:
 /// - `aliases`, `annotation`, `tags`, `genres`
@@ -30,7 +33,7 @@ class Series {
   /// Retrieves detailed information about a specific Series by its MusicBrainz ID.
   ///
   /// - [id]: The MusicBrainz ID of the Series to retrieve.
-  /// - [inc]: Additional details to include: `'aliases'`,`'annotation'`,`'tags'`,`'genres'`
+  /// - [inc]: Additional details to include: `'aliases'`,`'annotation'`,`'tags'`,`'genres'`, `'url-rels'`
   ///
   /// Returns a [Future] that completes with a [Map] containing the Series's details.
   ///

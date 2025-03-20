@@ -10,6 +10,9 @@ import 'package:logging/logging.dart';
 ///
 /// **Related Entities**:
 /// - `area`, `artist`, `collection`, `place`
+/// 
+/// **Subquery includes**
+/// - `'aliases'`, `'annotation'`, `'tags'`, `'genres'`, `'ratings'`, `'url-rels'`
 ///
 /// **Browse includes**:
 /// - `aliases`, `annotation`, `tags`, `genres`, `ratings`
@@ -30,7 +33,7 @@ class Event {
   /// Retrieves detailed information about a specific Event by its MusicBrainz ID.
   ///
   /// - [id]: The MusicBrainz ID of the Event to retrieve.
-  /// - [inc]: Additional details to include: `'aliases'`, `'annotation'`, `'tags'`, `'genres'`, `'ratings'`,
+  /// - [inc]: Additional details to include: `'aliases'`, `'annotation'`, `'tags'`, `'genres'`, `'ratings'`, `'url-rels'`
   ///
   /// Returns a [Future] that completes with a [Map] containing the Event's details.
   ///

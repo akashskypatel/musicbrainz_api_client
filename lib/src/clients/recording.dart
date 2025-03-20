@@ -36,7 +36,9 @@ class Recording {
   /// Retrieves detailed information about a specific Recording by its MusicBrainz ID.
   ///
   /// - [id]: The MusicBrainz ID of the Recording to retrieve.
-  /// - [inc]: Additional details to include: `'artists'`, `'releases'`, `'release-groups'`, `'isrcs'`, `'url-rels'`, `'artist-credits'`, `'annotation'`,`'tags'`,`'genres'`,`'ratings'`,`'artist-rels'`,`'release-rels'`,`'release-group-rels'`,`'url-rels'`,
+  /// - [inc]: Additional details to include: `'artists'`, `'releases'`, `'release-groups'`, `'isrcs'`,
+  ///  `'url-rels'`, `'artist-credits'`, `'annotation'`,`'tags'`,`'genres'`,`'ratings'`,`'artist-rels'`,
+  ///  `'release-rels'`,`'release-group-rels'`
   ///
   /// Returns a [Future] that completes with a [Map] containing the Recording's details.
   ///

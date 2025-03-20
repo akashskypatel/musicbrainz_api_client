@@ -36,7 +36,9 @@ class Artist {
   /// Retrieves detailed information about a specific Artist by its MusicBrainz ID.
   ///
   /// - [id]: The MusicBrainz ID of the Artist to retrieve.
-  /// - [inc]: Additional details to include: `'recordings'`,`'releases'`,`'release-groups'`,`'works'`,`'aliases'`,`'annotation'`,`'tags'`,`'genres'`,`'ratings'`,`'recording-rels'`,`'release-rels'`,`'release-group-rels'`,`'work-rels'`
+  /// - [inc]: Additional details to include: `'recordings'`,`'releases'`,`'release-groups'`,`'works'`,
+  /// `'aliases'`,`'annotation'`,`'tags'`,`'genres'`,`'ratings'`,`'recording-rels'`,`'release-rels'`,
+  /// `'release-group-rels'`,`'work-rels'`, `'url-rels'`
   ///
   /// Returns a [Future] that completes with a [Map] containing the Artist's details.
   ///

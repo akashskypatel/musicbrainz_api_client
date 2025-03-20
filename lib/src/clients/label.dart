@@ -36,7 +36,7 @@ class Label {
   /// Retrieves detailed information about a specific Label by its MusicBrainz ID.
   ///
   /// - [id]: The MusicBrainz ID of the Label to retrieve.
-  /// - [inc]: Additional details to include: `'releases'`, `'aliases'`,`'annotation'`,`'tags'`,`'genres'`,`'ratings'`,`'release-rels`'
+  /// - [inc]: Additional details to include: `'releases'`, `'aliases'`,`'annotation'`,`'tags'`,`'genres'`,`'ratings'`,`'release-rels`', `'url-rels'`
   ///
   /// Returns a [Future] that completes with a [Map] containing the Label's details.
   ///

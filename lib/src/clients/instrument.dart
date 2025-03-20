@@ -33,7 +33,7 @@ class Instrument {
   /// Retrieves detailed information about a specific Instrument by its MusicBrainz ID.
   ///
   /// - [id]: The MusicBrainz ID of the Instrument to retrieve.
-  /// - [inc]: Additional details to include: `'aliases'`, `'annotation'`, `'tags'`, `'genres'`, `'ratings'`
+  /// - [inc]: Additional details to include: `'aliases'`, `'annotation'`, `'tags'`, `'genres'`, `'ratings'`, `'url-rels'`
   ///
   /// Returns a [Future] that completes with a [Map] containing the Instrument's details.
   ///

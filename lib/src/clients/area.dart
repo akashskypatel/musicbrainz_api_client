@@ -10,6 +10,9 @@ import 'package:logging/logging.dart';
 ///
 /// **Related Entities**:
 /// - `collection`
+/// 
+/// **Subquery includes**
+/// - `'aliases'`, `'annotation'`, `'tags'`, `'genres'`, `'url-rels'`
 ///
 /// **Browse includes**:
 /// - `aliases`, `annotation`, `tags`, `genres`
@@ -29,7 +32,7 @@ class Area {
   /// Retrieves detailed information about a specific area by its MusicBrainz ID.
   ///
   /// - [id]: The MusicBrainz ID of the area to retrieve.
-  /// - [inc]: Additional details to include: `'aliases'`, `'annotation'`, `'tags'`, `'genres'`
+  /// - [inc]: Additional details to include: `'aliases'`, `'annotation'`, `'tags'`, `'genres'`, `'url-rels'`
   ///
   /// Returns a [Future] that completes with a [Map] containing the area's details.
   ///
