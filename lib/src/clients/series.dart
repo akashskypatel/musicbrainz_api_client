@@ -10,7 +10,7 @@ import 'package:logging/logging.dart';
 ///
 /// **Related Entities**:
 /// - `collection`
-/// 
+///
 /// **Subquery includes**
 /// - `'aliases'`,`'annotation'`,`'tags'`,`'genres'`, `'url-rels'`
 ///
