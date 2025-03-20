@@ -1,3 +1,8 @@
+## 0.1.6
+
+### Added
+- Fixed cover art response on error
+
 ## 0.1.5
 
 ### Added
