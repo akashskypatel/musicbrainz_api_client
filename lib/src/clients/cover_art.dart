@@ -8,7 +8,8 @@ import 'package:logging/logging.dart';
 /// This class provides methods to retrieve and search for Artists (e.g., countries, cities)
 /// in the MusicBrainz database.
 class CoverArt {
-  static final _logger = Logger('MusicBrainzApi.Artist');
+  static const _client = 'MusicBrainzApi.CoverArt';
+  static final _logger = Logger(_client);
   final MusicBrainzHttpClient _httpClient;
   final String _baseUrl = 'coverartarchive.org';
   final List<String> _validEntities = ['release', 'release-group'];
@@ -38,7 +39,12 @@ class CoverArt {
       return jsonDecode(response.body);
     } else {
       _logger.warning(response);
-      throw Exception('Failed to load search results: ${response.statusCode}');
+      if (!_httpClient.isSilent) {
+        throw Exception(
+          '$_client: Failed to get results: ${response.statusCode}',
+        );
+      }
+      return {'error': response.body.toString()};
     }
   }
 }
