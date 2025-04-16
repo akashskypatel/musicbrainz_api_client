@@ -1,3 +1,8 @@
+## 0.1.7
+
+### Added
+- Updated search documentation
+
 ## 0.1.6
 
 ### Added

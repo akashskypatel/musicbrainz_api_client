@@ -60,6 +60,11 @@ class Event {
   }
 
   /// Searches for Events in the MusicBrainz database based on a query.
+  /// 
+  /// Accepts Apache Lucene search syntax:
+  /// https://lucene.apache.org/core/7_7_2/queryparser/org/apache/lucene/queryparser/classic/package-summary.html#package.description
+  /// 
+  /// Additional information on query parameters can be found here: https://musicbrainz.org/doc/MusicBrainz_API/Search
   ///
   /// - [query]: The search query to match against Event names, aliases, etc.
   /// - [limit]: The maximum number of results to return (default is 25).
