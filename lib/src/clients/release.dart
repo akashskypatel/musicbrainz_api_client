@@ -1,7 +1,6 @@
-import 'dart:convert';
-
 import 'package:musicbrainz_api_client/src/clients/musicbrainz_http_client.dart';
 import 'package:logging/logging.dart';
+import 'package:musicbrainz_api_client/src/utils/utils.dart';
 
 /// A client for interacting with the MusicBrainz API's Release-related endpoints.
 ///
@@ -62,7 +61,7 @@ class Release {
         );
       }
     }
-    return jsonDecode(response.body);
+    return decodeJsonResponse(response);
   }
 
   /// Searches for Releases in the MusicBrainz database based on a query.

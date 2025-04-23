@@ -1,3 +1,8 @@
+## 0.1.8
+
+### Added
+- Fix encoding/decoding
+
 ## 0.1.7
 
 ### Added

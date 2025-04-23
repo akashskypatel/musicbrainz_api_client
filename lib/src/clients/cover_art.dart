@@ -1,7 +1,6 @@
-import 'dart:convert';
-
 import 'package:musicbrainz_api_client/src/clients/musicbrainz_http_client.dart';
 import 'package:logging/logging.dart';
+import 'package:musicbrainz_api_client/src/utils/utils.dart';
 
 /// A client for interacting with the MusicBrainz API's Artist-related endpoints.
 ///
@@ -36,7 +35,7 @@ class CoverArt {
     final response = await _httpClient.request(req);
 
     if (response.statusCode == 200) {
-      return jsonDecode(response.body);
+      return decodeJsonResponse(response);
     } else {
       _logger.warning(response);
       if (!_httpClient.isSilent) {

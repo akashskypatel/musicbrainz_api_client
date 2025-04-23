@@ -1,7 +1,6 @@
-import 'dart:convert';
-
 import 'package:musicbrainz_api_client/src/clients/musicbrainz_http_client.dart';
 import 'package:logging/logging.dart';
+import 'package:musicbrainz_api_client/src/utils/utils.dart';
 
 /// A client for interacting with the MusicBrainz API's genre-related endpoints.
 ///
@@ -58,7 +57,7 @@ class Genre {
             'Failed to load search results: ${response.statusCode}',
           );
         }
-        return jsonDecode(response.body);
+        return decodeJsonResponse(response);
       }
 
       // Handle text format response
@@ -70,7 +69,7 @@ class Genre {
       }
 
       // Handle JSON format response
-      final jsonResponse = jsonDecode(response.body);
+      final jsonResponse = decodeJsonResponse(response);
       final result = jsonResponse['${_entity}s'] ?? [];
       if (!paginated) {
         result.addAll(

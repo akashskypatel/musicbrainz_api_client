@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
+import 'package:musicbrainz_api_client/src/utils/utils.dart';
 
 enum HttpRequestType { GET, POST, PUT, DELETE }
 
@@ -257,11 +258,11 @@ class MusicBrainzHttpClient extends http.BaseClient {
             'Failed to load search results: ${response.statusCode}',
           );
         }
-        return jsonDecode(response.body);
+        return decodeJsonResponse(response);
       }
 
       // Handle JSON format response
-      var jsonResponse = jsonDecode(response.body);
+      var jsonResponse = decodeJsonResponse(response);
       var result = List.from(jsonResponse[entities]);
 
       if (!paginated &&
@@ -330,11 +331,11 @@ class MusicBrainzHttpClient extends http.BaseClient {
             'Failed to load search results: ${response.statusCode}',
           );
         }
-        return jsonDecode(response.body);
+        return decodeJsonResponse(response);
       }
 
       // Handle JSON format response
-      var jsonResponse = jsonDecode(response.body);
+      var jsonResponse = decodeJsonResponse(response);
       var result = jsonResponse[entities] ?? [];
       if (!paginated &&
           (jsonResponse['$entity-count'] ?? jsonResponse['count']) >
@@ -394,10 +395,10 @@ class MusicBrainzHttpClient extends http.BaseClient {
               'Failed to load paginated results: ${nextResponse.statusCode}',
             );
           }
-          return jsonDecode(nextResponse.body);
+          return decodeJsonResponse(nextResponse);
         }
 
-        final nextJsonResponse = jsonDecode(nextResponse.body);
+        final nextJsonResponse = decodeJsonResponse(nextResponse);
         final nextResults = nextJsonResponse[entities] ?? [];
 
         if (nextResults == null) break;
