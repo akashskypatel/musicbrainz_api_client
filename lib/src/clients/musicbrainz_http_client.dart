@@ -28,6 +28,7 @@ import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
 import 'package:musicbrainz_api_client/src/utils/utils.dart';
 
+// ignore: constant_identifier_names
 enum HttpRequestType { GET, POST, PUT, DELETE }
 
 /// Creates a new instance of [HttpRequestData].
@@ -63,7 +64,7 @@ class MusicBrainzHttpClient extends http.BaseClient {
   static const _client = 'MusicBrainzApi.MusicBrainzHttpClient';
   late final Map<HttpRequestType, Function> _httpRequestHandlers;
   static final _logger = Logger(_client);
-  static http.Client _httpClient = http.Client();
+  http.Client _httpClient = http.Client();
   bool isSilent = true;
 
   /// Indicates whether the client has been closed.
@@ -81,7 +82,7 @@ class MusicBrainzHttpClient extends http.BaseClient {
 
   static const Map<String, String> _defaultHeaders = {
     'user-agent':
-        'Dart:MusicBrainz_API_Client/0.2.0 (https://github.com/akashskypatel/musicbrainz_api_client)',
+        'Dart:MusicBrainz_API_Client/0.2.2 (https://github.com/akashskypatel/musicbrainz_api_client)',
   };
 
   /// Creates a new instance of [MusicBrainzHttpClient].
@@ -95,14 +96,14 @@ class MusicBrainzHttpClient extends http.BaseClient {
         newHeaders.addAll(_defaultHeaders);
         newHeaders.addAll(reqData.headers);
         _lastRequestTime = DateTime.now();
-        return await http.get(reqData.uri, headers: newHeaders);
+        return await _httpClient.get(reqData.uri, headers: newHeaders);
       },
       HttpRequestType.POST: (HttpRequestData reqData) async {
         Map<String, String> newHeaders = {};
         newHeaders.addAll(_defaultHeaders);
         newHeaders.addAll(reqData.headers);
         _lastRequestTime = DateTime.now();
-        return await http.post(
+        return await _httpClient.post(
           reqData.uri,
           headers: newHeaders,
           body: reqData.body,
@@ -114,7 +115,7 @@ class MusicBrainzHttpClient extends http.BaseClient {
         newHeaders.addAll(_defaultHeaders);
         newHeaders.addAll(reqData.headers);
         _lastRequestTime = DateTime.now();
-        return await http.put(
+        return await _httpClient.put(
           reqData.uri,
           headers: newHeaders,
           body: reqData.body,
@@ -126,7 +127,7 @@ class MusicBrainzHttpClient extends http.BaseClient {
         newHeaders.addAll(_defaultHeaders);
         newHeaders.addAll(reqData.headers);
         _lastRequestTime = DateTime.now();
-        return await http.delete(
+        return await _httpClient.delete(
           reqData.uri,
           headers: newHeaders,
           body: reqData.body,
