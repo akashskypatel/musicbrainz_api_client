@@ -1,7 +1,7 @@
 ## 0.2.1
 
 ### Added
-- Change isSile default from `True` to `False`
+- Change isSilent default from `True` to `False`
 - Make isSilent visible
 - Fix http client usage
 - update tests
