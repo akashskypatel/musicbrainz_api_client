@@ -123,7 +123,7 @@ class Release {
 
   /// Browse areas by related entity in the MusicBrainz database based on related id.
   ///
-  /// - [relatedEntity]: Entity realted to area to browse by: `'area'`, `'artist'`, `'label'`, `'track'`, `'track_artist'`, `'recording'`, `'release-group'`
+  /// - [relatedEntity]: Entity related to area to browse by: `'area'`, `'artist'`, `'label'`, `'track'`, `'track_artist'`, `'recording'`, `'release-group'`
   /// - [relatedId]: Id of the related entity to browse by.
   /// - [inc]: Additional details to include: `'annotation'`, `'tags'`, `'genres'`, `'artist-credits'`, `'labels'`, `'recordings'`, `'release-groups'`, `'media'`, `'discids'`, `'isrcs'`
   /// - [limit]: The maximum number of results to return (default is 25).

@@ -117,7 +117,7 @@ class Event {
 
   /// Browse areas by related entity in the MusicBrainz database based on related id.
   ///
-  /// - [relatedEntity]: Entity realted to area to browse by: `'area'`, `'artist'`, `'place'`
+  /// - [relatedEntity]: Entity related to area to browse by: `'area'`, `'artist'`, `'place'`
   /// - [relatedId]: Id of the related entity to browse by.
   /// - [inc]: Additional details to include: `'aliases'`, `'annotation'`, `'tags'`, `'genres'`, `'ratings'`
   /// - [limit]: The maximum number of results to return (default is 25).

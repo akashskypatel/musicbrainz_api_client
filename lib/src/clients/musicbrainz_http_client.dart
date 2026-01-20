@@ -320,7 +320,7 @@ class MusicBrainzHttpClient extends http.BaseClient {
   /// - [entity]: The type of entity to browse for (e.g., 'artist', 'release').
   /// - [relatedEntity]: Related entity to browse the browsing entity by.
   /// - [relatedId]: Id of the related entity to browse the browsing entity by.
-  /// - [inc]: Fields to ionclude in the result.
+  /// - [inc]: Fields to include in the result.
   /// - [limit]: The maximum number of results to return (default is 25).
   /// - [offset]: The offset for paginated results (default is 0).
   /// - [paginated]: Whether to return paginated results (default is `true`).

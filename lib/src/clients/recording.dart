@@ -122,7 +122,7 @@ class Recording {
 
   /// Browse areas by related entity in the MusicBrainz database based on related id.
   ///
-  /// - [relatedEntity]: Entity realted to area to browse by: `'artist'`, `'release'`, `'work'`
+  /// - [relatedEntity]: Entity related to area to browse by: `'artist'`, `'release'`, `'work'`
   /// - [relatedId]: Id of the related entity to browse by.
   /// - [inc]: Additional details to include: `'annotation'`, `'tags'`, `'genres'`, `'ratings'`, `'artist-credits'`, `'isrcs'`
   /// - [limit]: The maximum number of results to return (default is 25).

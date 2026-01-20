@@ -108,7 +108,7 @@ class URL {
 
   /// Browse areas by related entity in the MusicBrainz database based on related id.
   ///
-  /// - [relatedEntity]: Entity realted to area to browse by: `'resource'`
+  /// - [relatedEntity]: Entity related to area to browse by: `'resource'`
   /// - [relatedId]: Id of the related entity to browse by.
   /// - [limit]: The maximum number of results to return (default is 25).
   /// - [offset]: The offset for paginated results (default is 0).

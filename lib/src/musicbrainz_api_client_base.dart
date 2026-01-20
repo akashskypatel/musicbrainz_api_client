@@ -73,7 +73,7 @@ class MusicBrainzApiClient {
   /// final artist = await client.artists.get('artist-id');
   /// client.close();
   /// ```
-  MusicBrainzApiClient({http.Client? httpClient, this.isSilent = true}) 
+  MusicBrainzApiClient({http.Client? httpClient, this.isSilent = true})
       : _httpClient = MusicBrainzHttpClient(httpClient, isSilent) {
     genres = Genre(_httpClient);
     areas = Area(_httpClient);

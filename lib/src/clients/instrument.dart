@@ -118,7 +118,7 @@ class Instrument {
   /// TODO: To be implemented after user authorization
   /// Browse areas by related entity in the MusicBrainz database based on related id.
   ///
-  /// - [relatedEntity]: Entity realted to area to browse by: None
+  /// - [relatedEntity]: Entity related to area to browse by: None
   /// - [relatedId]: Id of the related entity to browse by.
   /// - [inc]: Additional details to include: `'aliases'`, `'annotation'`, `'tags'`, `'genres'`
   /// - [limit]: The maximum number of results to return (default is 25).

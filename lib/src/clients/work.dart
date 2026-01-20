@@ -117,7 +117,7 @@ class Work {
 
   /// Browse areas by related entity in the MusicBrainz database based on related id.
   ///
-  /// - [relatedEntity]: Entity realted to area to browse by: `'artist'`
+  /// - [relatedEntity]: Entity related to area to browse by: `'artist'`
   /// - [relatedId]: Id of the related entity to browse by.
   /// - [inc]: Additional details to include: `'aliases'`, `'annotation'`, `'tags'`, `'genres'`, `'ratings'`
   /// - [limit]: The maximum number of results to return (default is 25).

@@ -120,7 +120,7 @@ class Label {
 
   /// Browse areas by related entity in the MusicBrainz database based on related id.
   ///
-  /// - [relatedEntity]: Entity realted to area to browse by: `'area'`, `'release'`
+  /// - [relatedEntity]: Entity related to area to browse by: `'area'`, `'release'`
   /// - [relatedId]: Id of the related entity to browse by.
   /// - [inc]: Additional details to include: `'aliases'`, `'annotation'`, `'tags'`, `'releases'`, `'genres'`, `'ratings'`
   /// - [limit]: The maximum number of results to return (default is 25).
