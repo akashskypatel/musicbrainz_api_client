@@ -43,7 +43,7 @@ class CoverArt {
   /// Retrieves detailed information about a specific Artist by its MusicBrainz ID.
   ///
   /// - [id]: The MusicBrainz ID of the Artist to retrieve.
-  /// - [entity]: Entioty to retreive artwork for. Either: `releases` or `release-groups`
+  /// - [entity]: Entity to retrieve artwork for. Either: `release` or `release-group`
   ///
   /// Returns a [Future] that completes with a [Map] containing the Artist's details.
   ///
