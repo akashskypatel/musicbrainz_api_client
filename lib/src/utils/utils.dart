@@ -47,7 +47,7 @@ dynamic decodeJsonResponse(http.Response response) {
   return tryDecode(decodedString);
 }
 
-dynamic tryDecode(data) {
+dynamic tryDecode(dynamic data) {
   try {
     return jsonDecode(data);
   } catch (e) {
