@@ -55,6 +55,7 @@ class MusicBrainzApiClient {
   late final URL urls;
   late final Work works;
   late final CoverArt coverArt;
+  late final bool isSilent;
 
   /// Creates a new instance of [MusicBrainzApiClient].
   ///
@@ -62,14 +63,18 @@ class MusicBrainzApiClient {
   /// artists, releases, recordings, and more. Each endpoint is represented
   /// by a corresponding client (e.g., [Artist], [Release], [Recording]).
   ///
+  /// - [httpClient]: An optional HTTP client to use for requests. If not provided,
+  /// a default [http.Client] will be used.
+  /// - [isSilent]: If set to `true` (default), exceptions will be caught and returned as part of the response map with an 'error' key. If `false`, exceptions will be thrown.
+  ///
   /// Example usage:
   /// ```dart
   /// final client = MusicBrainzApiClient();
   /// final artist = await client.artists.get('artist-id');
   /// client.close();
   /// ```
-  MusicBrainzApiClient({http.Client? httpClient, bool isSilent = true})
-    : _httpClient = MusicBrainzHttpClient(httpClient, isSilent) {
+  MusicBrainzApiClient({http.Client? httpClient, this.isSilent = true}) 
+      : _httpClient = MusicBrainzHttpClient(httpClient, isSilent) {
     genres = Genre(_httpClient);
     areas = Area(_httpClient);
     artists = Artist(_httpClient);
