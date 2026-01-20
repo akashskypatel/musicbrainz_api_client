@@ -1,6 +1,15 @@
 ## 0.2.1
 
 ### Added
+- Change isSile default from `True` to `False`
+- Make isSilent visible
+- Fix http client usage
+- update tests
+- Add license snippets
+
+## 0.2.1
+
+### Added
 - Fix client assignment
 
 
